@@ -282,6 +282,29 @@ def mr_filter(img, niter, k, sigma,lvl = 6, pos = False, harder = 0,mulweight = 
       EXAMPLES
     """
 
+    use_pysap_filter = True
+    if use_pysap_filter:
+        from pysap.extensions import tools
+        imnew = np.zeros_like(img)
+        if soft:
+            type_of_filtering = 2
+        else:
+            type_of_filtering = 1
+        if newwave == 1:
+            type_of_non_orthog_filters = 2
+        else:
+            type_of_non_orthog_filters = 1
+        tools.mr_filter(img, imnew,
+                        type_of_filtering=8,
+                        type_of_multiresolution_transform=2,
+                        # type_of_filters=,
+                        type_of_non_orthog_filters=type_of_non_orthog_filters,
+                        number_of_iterations=niter, epsilon=0.001,
+                        sigma=sigma, nsigma=k, 
+                        verbose=True)
+        wmap, _ = mw.wave_transform(imnew,lvl, newwave=newwave, verbose=False)
+        return imnew, wmap
+
     shim = np.shape(img)
     n1 = shim[0]
     n2 = shim[1]
