@@ -4,7 +4,7 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
-import pyfits as pf
+import astropy.io.fits as pf
 #from mpl_toolkits.axes_grid1.axes_rgb import RGBAxes
 import matplotlib.colors as mc
 import subprocess as sp
@@ -54,7 +54,7 @@ def make_colour_sub(Sfile,Afile,Xfile,suffixe,prefix = './', cuts = ['0','0.1','
     nbb,n1,n2 = np.shape(X)
     
     if np.sum(sel)==0:
-        sel = np.array([0,nbb/2,nbb-1])
+        sel = np.array([0,int(nbb/2),int(nbb-1)])
 
     if nbb != nb :
         A =A.T
@@ -163,10 +163,10 @@ def make_colour_sub(Sfile,Afile,Xfile,suffixe,prefix = './', cuts = ['0','0.1','
     name_all = prefix+'Res_'+suffixe+'.png'
     
     if display:
-            sp.call('ds9 -rgbcube '+prefix+'Colour_images_disp.fits -zoom to fit -colorbar no -rgb green -scale limits '+infg+' '+maxg+' -rgb red -scale limits '+infr+' '+maxr+' -rgb blue -scale limits '+infb+' '+maxb+' -saveimage png '+name_colour,stdout=sp.PIPE, shell = True)
-            sp.call('ds9 -rgbcube '+prefix+'Red_residuals_disp.fits -zoom to fit -colorbar no -rgb green -scale limits '+infg+' '+maxg+' -rgb red -scale limits '+infr+' '+maxr+' -rgb blue -scale limits '+infb+' '+maxb+' -saveimage png '+name_red,stdout=sp.PIPE, shell = True)
-            sp.call('ds9 -rgbcube '+prefix+'Blue_residuals_disp.fits -zoom to fit -colorbar no -rgb green -scale limits '+infg+' '+maxg+' -rgb red -scale limits '+infr+' '+maxr+' -rgb blue -scale limits '+infb+' '+maxb+' -saveimage png '+name_blue,stdout=sp.PIPE, shell = True)
-            sp.call('ds9 -rgbcube '+prefix+'Colour_residuals_disp.fits -zoom to fit -colorbar no -rgb green -scale limits '+infgn+' '+maxgn+' -rgb red -scale limits '+infrn+' '+maxrn+' -rgb blue -scale limits '+infbn+' '+maxbn+' -saveimage png '+name_all,stdout=sp.PIPE, shell = True)
+        sp.call('ds9 -rgbcube '+prefix+'Colour_images_disp.fits -zoom to fit -colorbar no -rgb green -scale limits '+infg+' '+maxg+' -rgb red -scale limits '+infr+' '+maxr+' -rgb blue -scale limits '+infb+' '+maxb+' -saveimage png '+name_colour,stdout=sp.PIPE, shell = True)
+        sp.call('ds9 -rgbcube '+prefix+'Red_residuals_disp.fits -zoom to fit -colorbar no -rgb green -scale limits '+infg+' '+maxg+' -rgb red -scale limits '+infr+' '+maxr+' -rgb blue -scale limits '+infb+' '+maxb+' -saveimage png '+name_red,stdout=sp.PIPE, shell = True)
+        sp.call('ds9 -rgbcube '+prefix+'Blue_residuals_disp.fits -zoom to fit -colorbar no -rgb green -scale limits '+infg+' '+maxg+' -rgb red -scale limits '+infr+' '+maxr+' -rgb blue -scale limits '+infb+' '+maxb+' -saveimage png '+name_blue,stdout=sp.PIPE, shell = True)
+        sp.call('ds9 -rgbcube '+prefix+'Colour_residuals_disp.fits -zoom to fit -colorbar no -rgb green -scale limits '+infgn+' '+maxgn+' -rgb red -scale limits '+infrn+' '+maxrn+' -rgb blue -scale limits '+infbn+' '+maxbn+' -saveimage png '+name_all,stdout=sp.PIPE, shell = True)
 
     os.remove(prefix+'Colour_images_disp.fits')
     os.remove(prefix+'Red_residuals_disp.fits')
