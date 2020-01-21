@@ -12,7 +12,6 @@ import matplotlib.cm as cm
 import astropy.io.fits as pf
 
 import MuSCADeT.mk_pca as mk
-from MuSCADeT import MCA
 
 def pca_ring_spectrum(images, std = 0):
     """
@@ -28,6 +27,8 @@ def pca_ring_spectrum(images, std = 0):
     EXAMPLE:
     """
 
+    from MuSCADeT.MCA import MAD
+
     pad = 0
     images = images.T
     n1,n2,s = np.shape(images)
@@ -38,7 +39,7 @@ def pca_ring_spectrum(images, std = 0):
     tr = res+0 #For thresholded images
     support = np.zeros((n1,n2))
     for j in range(s):
-        sigmamr[j] = MCA.MAD(res0[:,:,j])
+        sigmamr[j] = MAD(res0[:,:,j])
         res[:,:,j] = res1[:,:,j]
         x,y = np.where(res[:,:,j]==0)
         tr[x,y,j] = 0
